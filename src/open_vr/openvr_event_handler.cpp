@@ -179,7 +179,8 @@ void OpenVREventHandler::_bind_methods() {
 	VREVENT_SIGNAL(vr::EVREventType::VREvent_SeatedZeroPoseReset, openvr_data::SeatedZeroPoseReset, guess);
 	VREVENT_SIGNAL(vr::EVREventType::VREvent_ChaperoneFlushCache, openvr_data::Chaperone, guess);
 	VREVENT_SIGNAL(vr::EVREventType::VREvent_ChaperoneRoomSetupStarting, openvr_data::Chaperone, guess);
-	VREVENT_SIGNAL(vr::EVREventType::VREvent_ChaperoneRoomSetupFinished, openvr_data::Chaperone, guess);
+	// TODO HACK use the non-deprecated version of this, do not merge!
+	//VREVENT_SIGNAL(vr::EVREventType::VREvent_ChaperoneRoomSetupFinished, openvr_data::Chaperone, guess);
 	VREVENT_SIGNAL(vr::EVREventType::VREvent_StandingZeroPoseReset, openvr_data::Unknown, none);
 
 	VREVENT_SIGNAL(vr::EVREventType::VREvent_AudioSettingsHaveChanged, openvr_data::Unknown, none);

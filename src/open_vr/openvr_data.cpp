@@ -399,7 +399,8 @@ void openvr_data::_handle_event(Node *source, vr::VREvent_t event) {
 			break;
 		case Chaperone:
 			data["m_nCurrentUniverse"] = event.data.chaperone.m_nCurrentUniverse;
-			data["m_nPreviousUniverse"] = event.data.chaperone.m_nPreviousUniverse;
+			// TODO HACK use the non-deprecated version of this, do not merge!
+			//data["m_nPreviousUniverse"] = event.data.chaperone.m_nPreviousUniverse;
 			break;
 		case PerformanceTest:
 			data["m_nFidelityLevel"] = event.data.performanceTest.m_nFidelityLevel;
