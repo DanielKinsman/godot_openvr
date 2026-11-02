@@ -30,6 +30,7 @@ void XRInterfaceOpenVR::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_device_battery_percentage"), &XRInterfaceOpenVR::get_device_battery_percentage);
 	ClassDB::bind_method(D_METHOD("is_device_charging"), &XRInterfaceOpenVR::is_device_charging);
+	ClassDB::bind_method(D_METHOD("get_eye_tracked_foveation_center"), &XRInterfaceOpenVR::get_eye_tracked_foveation_center);
 
 	ClassDB::bind_method(D_METHOD("get_render_model_names"), &XRInterfaceOpenVR::get_render_model_names);
 	ClassDB::bind_method(D_METHOD("load_render_model", "model_name"), &XRInterfaceOpenVR::load_render_model);
@@ -152,6 +153,28 @@ bool XRInterfaceOpenVR::is_device_charging(vr::TrackedDeviceIndex_t p_tracked_de
 	}
 
 	return is_charging;
+}
+
+PackedVector2Array XRInterfaceOpenVR::get_eye_tracked_foveation_center() {
+	PackedVector2Array result;
+	if (ovr == nullptr) {
+		return result;
+	}
+
+	vr::HmdVector2_t left;
+	vr::HmdVector2_t right;
+	bool code = ovr->hmd->GetEyeTrackedFoveationCenter(&left, &right);
+	// Method is undocumented so I can only guess as to what the return value means.
+	// It seems to yield true when my eyes are in the headset and true otherwise, though
+	// it still returns some valid looking data in either case.
+
+	result.resize(2);
+	result[0].x = left.v[0];
+	result[0].y = left.v[1];
+	result[1].x = right.v[0];
+	result[1].y = right.v[1];
+
+	return result;
 }
 
 Array XRInterfaceOpenVR::get_render_model_names() {
