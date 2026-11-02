@@ -23,7 +23,7 @@
 #include <godot_cpp/classes/xr_positional_tracker.hpp>
 #include <godot_cpp/classes/xr_server.hpp>
 #include <godot_cpp/godot.hpp>
-#include <godot_cpp/templates/vmap.hpp>
+#include <godot_cpp/templates/hash_map.hpp>
 
 #include <vector>
 
@@ -107,7 +107,7 @@ private:
 	OpenVRTrackingUniverse tracking_universe;
 
 	OpenVREventHandler *vrevent_handler;
-	static VMap<uint32_t, vr_event> event_signals;
+	static HashMap<uint32_t, vr_event> event_signals;
 
 	vr::IVRChaperone *chaperone;
 	bool play_area_is_dirty;

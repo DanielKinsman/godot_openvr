@@ -17,7 +17,7 @@
 using namespace godot;
 
 openvr_data *openvr_data::singleton = nullptr;
-VMap<uint32_t, openvr_data::vr_event> openvr_data::event_signals;
+HashMap<uint32_t, openvr_data::vr_event> openvr_data::event_signals;
 
 openvr_data::openvr_data() {
 	// get some default values
