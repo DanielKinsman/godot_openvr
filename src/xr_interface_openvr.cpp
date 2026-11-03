@@ -31,6 +31,7 @@ void XRInterfaceOpenVR::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_device_battery_percentage"), &XRInterfaceOpenVR::get_device_battery_percentage);
 	ClassDB::bind_method(D_METHOD("is_device_charging"), &XRInterfaceOpenVR::is_device_charging);
 	ClassDB::bind_method(D_METHOD("get_eye_tracked_foveation_center"), &XRInterfaceOpenVR::get_eye_tracked_foveation_center);
+	ClassDB::bind_method(D_METHOD("get_eye_tracked_foveation_center_for_projection"), &XRInterfaceOpenVR::get_eye_tracked_foveation_center_for_projection);
 
 	ClassDB::bind_method(D_METHOD("get_render_model_names"), &XRInterfaceOpenVR::get_render_model_names);
 	ClassDB::bind_method(D_METHOD("load_render_model", "model_name"), &XRInterfaceOpenVR::load_render_model);
@@ -167,12 +168,52 @@ PackedVector2Array XRInterfaceOpenVR::get_eye_tracked_foveation_center() {
 	// Method is undocumented so I can only guess as to what the return value means.
 	// It seems to yield true when my eyes are in the headset and true otherwise, though
 	// it still returns some valid looking data in either case.
+	// Unfortunately the left and right center are *always* the same distance apart
+	// with no difference in separation when focusing on near vs far objects,
+	// so I don't think this is what we want.
 
 	result.resize(2);
 	result[0].x = left.v[0];
 	result[0].y = left.v[1];
 	result[1].x = right.v[0];
 	result[1].y = right.v[1];
+
+	return result;
+}
+
+Vector2 XRInterfaceOpenVR::get_eye_tracked_foveation_center_for_projection(Projection projection) {
+	Vector2 result;
+	if (ovr == nullptr) {
+		return result;
+	}
+
+	vr::HmdMatrix44_t proj;
+	// TODO is this order right?
+	proj.m[0][0] = projection.columns[0][0];
+	proj.m[0][1] = projection.columns[0][1];
+	proj.m[0][2] = projection.columns[0][2];
+	proj.m[0][3] = projection.columns[0][3];
+
+	proj.m[1][0] = projection.columns[1][0];
+	proj.m[1][1] = projection.columns[1][1];
+	proj.m[1][2] = projection.columns[1][2];
+	proj.m[1][3] = projection.columns[1][3];
+
+	proj.m[2][0] = projection.columns[2][0];
+	proj.m[2][1] = projection.columns[2][1];
+	proj.m[2][2] = projection.columns[2][2];
+	proj.m[2][3] = projection.columns[2][3];
+
+	proj.m[3][0] = projection.columns[3][0];
+	proj.m[3][1] = projection.columns[3][1];
+	proj.m[3][2] = projection.columns[3][2];
+	proj.m[3][3] = projection.columns[3][3];
+
+	vr::HmdVector2_t answer;
+	bool code = ovr->hmd->GetEyeTrackedFoveationCenterForProjection(&proj, &answer);
+
+	result.x = answer.v[0];
+	result.y = answer.v[1];
 
 	return result;
 }

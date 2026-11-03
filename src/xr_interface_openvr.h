@@ -47,6 +47,7 @@ public:
 	float get_device_battery_percentage(vr::TrackedDeviceIndex_t p_tracked_device_index);
 	bool is_device_charging(vr::TrackedDeviceIndex_t p_tracked_device_index);
 	PackedVector2Array get_eye_tracked_foveation_center();
+	Vector2 get_eye_tracked_foveation_center_for_projection(Projection projection);
 
 	// Functions
 	virtual StringName _get_name() const override;

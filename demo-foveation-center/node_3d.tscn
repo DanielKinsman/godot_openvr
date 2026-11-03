@@ -2,5 +2,55 @@
 
 [ext_resource type="Script" uid="uid://bnc13qeqbus0h" path="res://node_3d.gd" id="1_a202f"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8bdhr"]
+shading_mode = 0
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_20cm6"]
+material = SubResource("StandardMaterial3D_8bdhr")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a202f"]
+shading_mode = 0
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_noarx"]
+material = SubResource("StandardMaterial3D_a202f")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_20cm6"]
+material = SubResource("StandardMaterial3D_noarx")
+size = Vector3(0.1, 0.1, 0.1)
+
 [node name="Node3D" type="Node3D" unique_id=761802871]
 script = ExtResource("1_a202f")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1730165965]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=2144811133]
+
+[node name="leftmarker" type="MeshInstance3D" parent="XROrigin3D/XRCamera3D" unique_id=1851574296]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+mesh = SubResource("SphereMesh_20cm6")
+
+[node name="rightmarker" type="MeshInstance3D" parent="XROrigin3D/XRCamera3D" unique_id=1097826654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+mesh = SubResource("SphereMesh_noarx")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1080143387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+text = "asdasd"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1036859968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.25)
+mesh = SubResource("BoxMesh_20cm6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1105676744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -100)
+visible = false
+mesh = SubResource("BoxMesh_20cm6")

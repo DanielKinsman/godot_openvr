@@ -36,3 +36,9 @@ enabled=PackedStringArray("res://addons/godot-openvr/plugin.cfg")
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+
+[xr]
+
+openxr/enabled=true
+openxr/foveation_eye_tracked=false
+shaders/enabled=true
